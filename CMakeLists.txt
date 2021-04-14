@@ -26,6 +26,8 @@ INCLUDE(FindPkgConfig)
 pkg_check_modules(PKGS_DEP REQUIRED
                 blkid
 )
+
+
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 if(ANDROID)
@@ -43,6 +45,10 @@ else()
     mainwindow.ui
   )
 endif()
+pkg_search_module(BLKID REQUIRED blkid)
+target_include_directories(DiskTool SYSTEM PUBLIC ${BLKID_INCLUDE_DIRS})
 
 target_link_libraries(DiskTool PRIVATE Qt5::Widgets)
 target_link_libraries(DiskTool PRIVATE blkid)
+
+target_link_libraries(DiskTool PRIVATE ${BLKID_LIBRARIES})
