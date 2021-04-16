@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(DiskTool LANGUAGES CXX)
 
@@ -27,7 +27,7 @@ pkg_check_modules(PKGS_DEP REQUIRED
                 blkid
 )
 
-
+add_subdirectory (lib)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 if(ANDROID)
@@ -35,8 +35,6 @@ if(ANDROID)
     src/main.cpp
     src/mainwindow.cpp
     inc/mainwindow.h
-    src/qhexview.cpp
-    inc/qhexview.h
     ui/mainwindow.ui
   )
 else()
@@ -44,16 +42,21 @@ else()
     src/main.cpp
     src/mainwindow.cpp
     inc/mainwindow.h
-    src/qhexview.cpp
-    inc/qhexview.h
     src/mainwindow.ui
   )
 endif()
 pkg_search_module(BLKID REQUIRED blkid)
-target_include_directories(DiskTool SYSTEM PUBLIC inc ${BLKID_INCLUDE_DIRS})
+target_include_directories(DiskTool SYSTEM PUBLIC
+      lib
+      inc
+      ${BLKID_INCLUDE_DIRS}
+)
 
 
-target_link_libraries(DiskTool PRIVATE Qt5::Widgets)
-target_link_libraries(DiskTool PRIVATE blkid)
+target_link_libraries(DiskTool PRIVATE
+      Qt5::Widgets
+      ${BLKID_LIBRARIES}
+      qhexview
 
-target_link_libraries(DiskTool PRIVATE ${BLKID_LIBRARIES})
+
+)

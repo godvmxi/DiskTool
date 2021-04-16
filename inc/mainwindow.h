@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+//#include "qhexview/qhexview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +18,7 @@ public:
 
 private slots:
     void on_pushButtonOpenImgFile_clicked();
+    //QHexView m_qHexView = NULL;
 
 private:
     Ui::MainWindow *ui;
