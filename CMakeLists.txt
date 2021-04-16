@@ -32,21 +32,26 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 if(ANDROID)
   add_library(DiskTool SHARED
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+    src/main.cpp
+    src/mainwindow.cpp
+    inc/mainwindow.h
+    src/qhexview.cpp
+    inc/qhexview.h
+    ui/mainwindow.ui
   )
 else()
   add_executable(DiskTool
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+    src/main.cpp
+    src/mainwindow.cpp
+    inc/mainwindow.h
+    src/qhexview.cpp
+    inc/qhexview.h
+    src/mainwindow.ui
   )
 endif()
 pkg_search_module(BLKID REQUIRED blkid)
-target_include_directories(DiskTool SYSTEM PUBLIC ${BLKID_INCLUDE_DIRS})
+target_include_directories(DiskTool SYSTEM PUBLIC inc ${BLKID_INCLUDE_DIRS})
+
 
 target_link_libraries(DiskTool PRIVATE Qt5::Widgets)
 target_link_libraries(DiskTool PRIVATE blkid)
